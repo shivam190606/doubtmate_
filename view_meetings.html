@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1 style="margin-bottom: 1.5rem;">Upcoming Meetings</h1>
+
+{% if meetings|length == 0 %}
+<div class="card" style="text-align:center; padding:2rem; color:#777;">
+    No meetings scheduled yet.
+</div>
+{% else %}
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+    {% for m in meetings %}
+    <div class="card">
+        <h2 style="margin-bottom:0.5rem;">{{ m.topic }}</h2>
+
+        <p style="color:#555; margin:0.3rem 0;">
+            <strong>Teacher:</strong> {{ m.teacher_name }}
+        </p>
+
+        <p style="color:#555; margin:0.3rem 0;">
+            <strong>Scheduled:</strong> {{ m.time }}
+        </p>
+
+        <a href="{{ m.link }}" class="btn btn-primary" target="_blank">Join Meeting</a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

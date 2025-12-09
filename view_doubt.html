@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div style="max-width: 800px; margin: 0 auto;">
+
+  <!-- Main Doubt Card -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <h2 style="font-size: 1.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+      {{ doubt.title }}
+    </h2>
+
+    <div
+      style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem;
+             padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+      Posted by
+      <a href="{{ url_for('profile', username=doubt.username) }}"
+         style="color: var(--primary); font-weight: 500;">
+        {{ doubt.username }}
+      </a>
+      on {{ doubt.created_at.split('T')[0] }}
+    </div>
+
+    <div style="font-size: 1.1rem; line-height: 1.7; color: var(--text-main); white-space: pre-wrap;">
+      {{ doubt.description }}
+    </div>
+  </div>
+
+
+  <!-- Discussion Section -->
+  <div style="margin-bottom: 3rem;">
+    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-main);">
+      Discussion ({{ replies|length }})
+    </h3>
+
+    {% if replies|length == 0 %}
+    <div
+      style="text-align: center; padding: 2rem; background: var(--surface);
+             border-radius: var(--radius); border: 1px dashed var(--border);
+             color: var(--text-muted);">
+      No replies yet. Be the first to help!
+    </div>
+
+    {% else %}
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+      {% for r in replies %}
+      <div class="card" style="padding: 1.25rem; border-left: 4px solid var(--primary);">
+
+        <div style="margin-bottom: 0.75rem; font-size: 0.875rem;">
+          <a href="{{ url_for('profile', username=r.username) }}"
+             style="font-weight: 600; color: var(--text-main);">
+            {{ r.username }}
+          </a>
+          <span style="color: var(--text-muted);">• {{ r.created_at.split('T')[0] }}</span>
+        </div>
+
+        <div style="color: var(--text-main); line-height: 1.6;">
+          {{ r.content }}
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+    {% endif %}
+  </div>
+
+
+  <!-- Reply Form -->
+  {% if user %}
+  <div class="card" style="background: var(--surface); border: 1px solid var(--border);">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h3 style="font-size: 1.1rem; font-weight: 600; margin: 0;">Add a Reply</h3>
+
+      <a href="{{ url_for('ai_suggest', doubt_id=doubt.id) }}"
+         class="btn btn-secondary"
+         style="font-size: 0.85rem;">
+        ✨ AI Suggest
+      </a>
+    </div>
+
+    <form action="{{ url_for('reply', doubt_id=doubt.id) }}" method="post">
+      <textarea name="content" rows="4" class="form-control" required
+                placeholder="Type your answer here..."
+                style="resize: vertical; min-height: 100px; margin-bottom: 1rem; font-family: inherit;"></textarea>
+
+      <div style="text-align: right;">
+        <button class="btn btn-primary" type="submit">Post Reply</button>
+      </div>
+    </form>
+
+  </div>
+
+  {% else %}
+  <div class="card" style="text-align: center;">
+    <p>
+      <a href="{{ url_for('login') }}" style="color: var(--primary); font-weight: 600;">
+        Log in
+      </a>
+      to join the discussion.
+    </p>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

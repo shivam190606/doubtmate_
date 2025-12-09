@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1>Recent Doubts</h1>
+
+{% if doubts|length == 0 %}
+<div class="card">
+  <p>No doubts posted yet. Be the first to <a href="{{ url_for('post_doubt') }}">post a doubt</a>.</p>
+</div>
+{% endif %}
+
+{% for d in doubts %}
+<div class="card">
+  <h2>
+    <a href="{{ url_for('view_doubt', doubt_id=d.id) }}">{{ d.title }}</a>
+  </h2>
+
+  <div style="color: #666; margin: 10px 0;">
+    by <a href="{{ url_for('profile', username=d.username) }}">{{ d.username or 'Anonymous' }}</a>
+    • {{ d.created_at.split('T')[0] }}
+  </div>
+
+  <p>{{ d.description[:250] }}{% if d.description|length > 250 %}...{% endif %}</p>
+
+  <a class="btn" href="{{ url_for('view_doubt', doubt_id=d.id) }}">View & Reply</a>
+
+{#  
+{% if user and user.id == d.user_id %}
+  <a class="btn" href="{{ url_for('edit_doubt', doubt_id=d.id) }}" style="background:#95a5a6;">Edit</a>
+
+  <form method="post" action="{{ url_for('delete_doubt', doubt_id=d.id) }}" style="display:inline;">
+    <button class="btn" type="submit" onclick="return confirm('Are you sure you want to delete this doubt?');"
+      style="background:#e74c3c;">
+      Delete
+    </button>
+  </form>
+{% endif %}
+#}
+{#  
+{% if user and user.id == d.user_id %}
+  <a class="btn" href="{{ url_for('edit_doubt', doubt_id=d.id) }}" style="background:#95a5a6;">Edit</a>
+
+  <form method="post" action="{{ url_for('delete_doubt', doubt_id=d.id) }}" style="display:inline;">
+    <button class="btn" type="submit" onclick="return confirm('Are you sure you want to delete this doubt?');"
+      style="background:#e74c3c;">
+      Delete
+    </button>
+  </form>
+{% endif %}
+#}
+
+</div>
+{% endfor %}
+
+{% endblock %}

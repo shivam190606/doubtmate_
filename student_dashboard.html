@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Student Dashboard</h1>
+
+<div class="card">
+    <a class="btn" href="{{ url_for('post_doubt') }}">+ Ask a Doubt</a>
+    <a class="btn" href="{{ url_for('view_meetings') }}">🔗 View Meetings</a>
+</div>
+
+<div class="card">
+    <h2>Community Doubts</h2>
+    <ul>
+        {% for d in doubts %}
+        <li>
+            <a href="{{ url_for('view_doubt', doubt_id=d.id) }}">{{ d.title }}</a>
+            <span style="color:#666;"> — by {{ d.username }}</span>
+        </li>
+        {% else %}
+        <li>No doubts posted yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Latest Videos from Teachers</h2>
+    <ul>
+        {% for v in videos %}
+        <li>
+            <strong>{{ v.title }}</strong> —
+            <a href="{{ v.video_url }}" target="_blank">Watch</a>
+        </li>
+        {% else %}
+        <li>No videos uploaded yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

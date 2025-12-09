@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="card">
+  <h2>AI Suggested Answer</h2>
+
+  <h3>{{ doubt.title }}</h3>
+  <p class="doubt-desc">{{ doubt.description }}</p>
+
+  <div class="reply" style="margin-top:15px;">
+    <h4>AI Answer:</h4>
+    <p>{{ ai_answer }}</p>
+  </div>
+
+  {% if user %}
+    <form action="{{ url_for('reply', doubt_id=doubt.id) }}" method="post">
+      <textarea name="content" style="display:none;">{{ ai_answer }}</textarea>
+      <button class="btn" type="submit">Post as Reply</button>
+    </form>
+  {% endif %}
+
+  <a class="btn ghost" href="{{ url_for('view_doubt', doubt_id=doubt.id) }}">Back</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="card">
+    <h2>Edit Doubt</h2>
+    <form method="post">
+      <label>Title</label>
+      <input name="title" value="{{ doubt.title }}" required />
+
+      <label>Description</label>
+      <textarea name="description" rows="8" required>{{ doubt.description }}</textarea>
+
+      <button class="btn" type="submit">Save</button>
+      <a class="btn ghost" href="{{ url_for('view_doubt', doubt_id=doubt.id) }}">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

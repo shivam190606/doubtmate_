@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="card" style="max-width: 500px; margin: 50px auto;">
+    <h2>Login</h2>
+    <form method="post">
+        <label>Username</label>
+        <input name="username" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <button class="btn" type="submit">Login</button>
+    </form>
+    <p style="margin-top: 15px;">Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+</div>
+
+{% endblock %}

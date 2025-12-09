@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Create Meeting</title></head>
+<body>
+  <h1>Schedule Meeting</h1>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <form method="post" action="{{ url_for('create_meeting') }}">
+    <label>Topic: <input type="text" name="topic" required></label><br>
+    <label>Link (Google Meet / Zoom / Jitsi): <input type="url" name="link" required></label><br>
+    <label>Time (text or ISO): <input type="text" name="time" placeholder="2025-12-03T12:30:00" required></label><br>
+    <button type="submit">Schedule</button>
+  </form>
+  <p><a href="{{ url_for('teacher_dashboard') }}">Back to dashboard</a></p>
+</body>
+</html>

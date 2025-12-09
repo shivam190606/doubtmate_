@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Teacher Dashboard</h1>
+
+<div class="card">
+    <h2>Your Videos</h2>
+    <a class="btn" href="{{ url_for('upload_video') }}">+ Upload New Video</a>
+    <hr style="margin: 15px 0;">
+    <ul>
+        {% for v in videos %}
+        <li>
+            <strong>{{ v.title }}</strong> —
+            <a href="{{ v.video_url }}" target="_blank">Watch</a>
+        </li>
+        {% else %}
+        <li>No videos uploaded yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Your Meetings</h2>
+    <a class="btn" href="{{ url_for('create_meeting') }}">+ Schedule Meeting</a>
+    <hr style="margin: 15px 0;">
+    <ul>
+        {% for m in meetings %}
+        <li>
+            {{ m.topic }} — {{ m.time }} —
+            <a href="{{ m.link }}" target="_blank">Join</a>
+        </li>
+        {% else %}
+        <li>No meetings scheduled.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Recent Student Doubts</h2>
+    <ul>
+        {% for d in doubts %}
+        <li>
+            <a href="{{ url_for('view_doubt', doubt_id=d.id) }}">{{ d.title }}</a>
+            <span style="color:#666;"> — by {{ d.username }}</span>
+        </li>
+        {% else %}
+        <li>No doubts found.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
